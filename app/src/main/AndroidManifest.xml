@@ -6,7 +6,8 @@
         android:label="MAYA TOURS"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
-android:icon="@drawable/maya_tours_icon"
+        android:icon="@drawable/maya_tours_icon"
+
         <activity
             android:name="com.mayatours.intelkg.MainActivity"
             android:exported="true">
