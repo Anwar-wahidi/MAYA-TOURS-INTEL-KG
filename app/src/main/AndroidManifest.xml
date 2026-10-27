@@ -5,8 +5,8 @@
         android:allowBackup="false"
         android:label="MAYA TOURS"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar">
         android:icon="@drawable/maya_tours_icon"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
 
         <activity
             android:name="com.mayatours.intelkg.MainActivity"
@@ -18,7 +18,6 @@
             </intent-filter>
 
         </activity>
-
     </application>
 
 </manifest>
