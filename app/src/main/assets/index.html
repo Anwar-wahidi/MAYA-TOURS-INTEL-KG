@@ -1,92 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MAYA TOURS</title>
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f5f9;
-  color: #172b4d;
-}
-header {
-  background: #123b68;
-  color: white;
-  padding: 25px 15px;
-  text-align: center;
-}
-header h1 { margin: 0; }
-header p { margin-bottom: 0; }
-main { padding: 18px; }
-.card {
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 8px #00000015;
-  font-size: 19px;
-  font-weight: bold;
-}
-.card small {
-  display: block;
-  font-size: 13px;
-  font-weight: normal;
-  color: #607086;
-  margin-top: 7px;
-}
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #607086;
-}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f2f5f9;color:#172b4d}header{background:#123b68;color:white;padding:24px 16px;text-align:center}header h1{margin:0;font-size:29px}header p{margin:8px 0 0}main{padding:18px;max-width:720px;margin:auto}h2{margin:8px 0 20px}.card{display:block;width:100%;border:0;text-align:right;background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 2px 8px #00000015;font-size:20px;font-weight:bold;color:#172b4d}.card small{display:block;font-size:14px;font-weight:normal;color:#607086;margin-top:7px}.hidden{display:none!important}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}button{cursor:pointer}button.primary{background:#123b68;color:white;border:0;border-radius:9px;padding:12px 15px;font-size:16px}button.secondary{background:white;color:#123b68;border:1px solid #b7c5d6;border-radius:9px;padding:11px 15px;font-size:15px}input,select{width:100%;padding:12px;border:1px solid #b9c5d1;border-radius:9px;font-size:16px;background:white}label{display:block;margin:12px 0 6px;font-weight:bold}.panel{background:white;border-radius:14px;padding:17px;margin-bottom:14px;box-shadow:0 2px 8px #00000012}.vehicle{border-right:5px solid #2878b8}.vehicle h3{margin:0 0 8px}.muted{color:#607086}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.status{display:inline-block;background:#e8f1fa;padding:5px 10px;border-radius:20px;font-size:13px}.empty{text-align:center;color:#607086;padding:25px}footer{text-align:center;color:#607086;padding:18px}#notice{margin:12px 0;color:#a33}button.danger{color:#a12222;border-color:#e3b4b4}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>🚌 MAYA TOURS</h1>
-  <p>מערכת ניהול ובטיחות – אינטל קריית גת</p>
-</header>
-
+<header><h1>🚌 MAYA TOURS</h1><p>מערכת ניהול ובטיחות – אינטל קריית גת</p></header>
 <main>
-  <h2>לוח בקרה ראשי</h2>
-
-  <div class="card">
-    🚍 ניהול רכבים
-    <small>רשימת רכבים ומצב כשירות</small>
-  </div>
-
-  <div class="card">
-    🔧 רכבים במוסך
-    <small>מעקב תקלות ותיקונים</small>
-  </div>
-
-  <div class="card">
-    👨‍✈️ ניהול נהגים
-    <small>פרטי נהגים והדרכות</small>
-  </div>
-
-  <div class="card">
-    ⚠️ אירועי בטיחות
-    <small>דיווח ומעקב אירועים</small>
-  </div>
-
-  <div class="card">
-    📋 נהלי אינטל
-    <small>הנחיות בטיחות ותפעול</small>
-  </div>
-
-  <div class="card">
-    🔐 ניהול סדרנים והרשאות
-    <small>הרשאות אישיות ואישור שינויים</small>
-  </div>
-</main>
-
-<footer>
-  MAYA TOURS © 2026
-</footer>
-
-</body>
-</html>
+<section id="home"><h2>לוח בקרה ראשי</h2>
+<button class="card" onclick="showVehicles()">🚍 ניהול רכבים<small>רשימת רכבים ומצב כשירות</small></button>
+<div class="card">🔧 רכבים במוסך<small>מעקב תקלות ותיקונים – בפיתוח</small></div>
+<div class="card">👨‍✈️ ניהול נהגים<small>פרטי נהגים והדרכות – בפיתוח</small></div>
+<div class="card">⚠️ אירועי בטיחות<small>דיווח ומעקב אירועים – בפיתוח</small></div>
+<div class="card">📋 נהלי אינטל<small>הנחיות בטיחות ותפעול – בפיתוח</small></div>
+<div class="card">🔐 ניהול סדרנים והרשאות<small>הרשאות אישיות ואישור שינויים – בפיתוח</small></div>
+</section>
+<section id="vehicles" class="hidden"><div class="toolbar"><button class="secondary" onclick="showHome()">← חזרה ללוח הבקרה</button><button class="primary" onclick="openForm()">+ הוסף רכב</button></div><h2>🚍 ניהול רכבים</h2><input id="search" placeholder="חיפוש לפי מספר רכב או סוג" oninput="renderVehicles()"><div id="vehicleList" style="margin-top:16px"></div></section>
+<section id="formScreen" class="hidden"><div class="toolbar"><button class="secondary" onclick="showVehicles()">← חזרה לרשימה</button></div><div class="panel"><h2 id="formTitle">הוספת רכב</h2><form id="vehicleForm"><label for="plate">מספר רכב *</label><input id="plate" inputmode="numeric" required maxlength="12" placeholder="לדוגמה: 40106803"><label for="kind">סוג רכב</label><select id="kind"><option>מיניבוס</option><option>אוטובוס</option><option>רכב אחר</option></select><label for="status">מצב תפעולי (לדיווח בלבד)</label><select id="status"><option>פעיל</option><option>במוסך</option><option>מושבת</option><option>דורש בדיקה</option></select><label for="notes">הערות</label><input id="notes" maxlength="250" placeholder="הערות על הרכב"><p class="muted">שינוי סטטוס כאן אינו מהווה אישור כשירות בטיחותית.</p><div id="notice"></div><button type="submit" class="primary">שמור רכב</button></form></div></section>
+</main><footer>MAYA TOURS © 2026</footer>
+<script>
+'use strict';
+const KEY='maya_tours_vehicles_v1';let vehicles=[];let editingId=null;
+try{const data=JSON.parse(localStorage.getItem(KEY)||'[]');vehicles=Array.isArray(data)?data:[]}catch(e){vehicles=[];alert('לא ניתן לקרוא נתונים שמורים. לא בוצעה מחיקה.')} 
+function save(){try{localStorage.setItem(KEY,JSON.stringify(vehicles));return true}catch(e){alert('לא ניתן לשמור את הנתונים במכשיר.');return false}}
+function screen(id){for(const el of document.querySelectorAll('main>section'))el.classList.toggle('hidden',el.id!==id);window.scrollTo(0,0)}
+function showHome(){screen('home')}
+function showVehicles(){screen('vehicles');renderVehicles()}
+function openForm(id){editingId=id||null;const v=vehicles.find(x=>x.id===id);document.getElementById('formTitle').textContent=v?'עריכת רכב':'הוספת רכב';document.getElementById('plate').value=v?v.plate:'';document.getElementById('kind').value=v?v.kind:'מיניבוס';document.getElementById('status').value=v?v.status:'פעיל';document.getElementById('notes').value=v?v.notes:'';document.getElementById('notice').textContent='';screen('formScreen')}
+function renderVehicles(){const list=document.getElementById('vehicleList');list.replaceChildren();const q=document.getElementById('search').value.trim();const matches=vehicles.filter(v=>v.plate.includes(q)||v.kind.includes(q));if(!matches.length){const p=document.createElement('div');p.className='empty';p.textContent=vehicles.length?'לא נמצאו רכבים מתאימים':'עדיין לא הוספת רכבים. לחץ על ״הוסף רכב״.';list.appendChild(p);return}for(const v of matches){const box=document.createElement('div');box.className='panel vehicle';const title=document.createElement('h3');title.textContent='רכב '+v.plate;const desc=document.createElement('div');desc.className='muted';desc.textContent=v.kind;const st=document.createElement('span');st.className='status';st.textContent=v.status;box.append(title,desc,st);if(v.notes){const n=document.createElement('p');n.textContent=v.notes;box.appendChild(n)}const row=document.createElement('div');row.className='row';const edit=document.createElement('button');edit.className='secondary';edit.textContent='עריכה';edit.onclick=()=>openForm(v.id);const del=document.createElement('button');del.className='secondary danger';del.textContent='מחיקה';del.onclick=()=>removeVehicle(v.id);row.append(edit,del);box.appendChild(row);list.appendChild(box)}}
+function removeVehicle(id){const v=vehicles.find(x=>x.id===id);if(!v||!confirm('למחוק את רכב '+v.plate+'?'))return;const previous=vehicles;vehicles=vehicles.filter(x=>x.id!==id);if(!save())vehicles=previous;renderVehicles()}
+document.getElementById('vehicleForm').addEventListener('submit',function(e){e.preventDefault();const plate=document.getElementById('plate').value.trim().replace(/[\s-]/g,'');const notice=document.getElementById('notice');if(!/^\d{7,9}$/.test(plate)){notice.textContent='יש להזין מספר רכב בן 7 עד 9 ספרות.';return}if(vehicles.some(v=>v.plate===plate&&v.id!==editingId)){notice.textContent='מספר הרכב כבר קיים ברשימה.';return}const v={id:editingId||String(Date.now())+'_'+Math.random().toString(36).slice(2),plate,kind:document.getElementById('kind').value,status:document.getElementById('status').value,notes:document.getElementById('notes').value.trim()};const previous=vehicles.slice();if(editingId){vehicles=vehicles.map(x=>x.id===editingId?v:x)}else{vehicles.push(v)}if(save())showVehicles();else vehicles=previous});
+</script>
+</body></html>
