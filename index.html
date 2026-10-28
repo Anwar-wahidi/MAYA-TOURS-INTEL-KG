@@ -1,30 +1,29 @@
-<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MAYA TOURS | INTEL KG</title><style>
-:root{font-family:Arial,sans-serif;color:#14253b;background:#edf3f8}*{box-sizing:border-box}body{margin:0}header{background:linear-gradient(125deg,#103354,#086f83);color:white;padding:22px 16px}header small{opacity:.85}h1{margin:5px 0;font-size:24px}.wrap{max-width:950px;margin:auto;padding:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat,.card{background:white;border-radius:13px;padding:14px;box-shadow:0 2px 9px #193a5612}.stat strong{display:block;font-size:27px;color:#076d7c}.stat span{font-size:12px}.tabs{display:flex;overflow-x:auto;gap:8px;padding:14px 0}.tabs button{white-space:nowrap;background:white;color:#21415c}.tabs button.active{background:#086f83;color:white}button{border:0;border-radius:9px;padding:11px 15px;background:#086f83;color:white;font-weight:bold;cursor:pointer}button.secondary{background:#e9f2f6;color:#17415b}button.danger{background:#a73434}input,select,textarea{width:100%;padding:10px;border:1px solid #c7d4df;border-radius:8px;margin:5px 0 11px;background:white;font:inherit}label{font-size:13px;font-weight:bold}h2{font-size:19px}.row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.item{border:1px solid #e1eaf0;padding:12px;border-radius:10px;margin:9px 0;background:#fff}.badge{display:inline-block;border-radius:20px;background:#e8f3f5;color:#066979;padding:4px 9px;font-size:12px}.muted{color:#647789;font-size:13px}.hidden{display:none}.actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.notice{background:#fff5d8;padding:12px;border-radius:10px;font-size:13px;margin:12px 0}@media(max-width:550px){.row{grid-template-columns:1fr}.stats{gap:5px}.stat{padding:10px}}
-</style></head><body><header><small>מערכת ניהול פנימית • גרסת ניסיון מקומית</small><h1>🚍 MAYA TOURS – INTEL KG</h1><div>צי רכב | תקלות | מוסכים | משימות</div></header><main class="wrap"><div class="notice">⚠️ גרסת ניסיון: הנתונים נשמרים במכשיר זה בלבד. אין עדיין סנכרון ענן, חשבונות משתמשים או אישור כשירות מחייב. אין להזין פרטים אישיים רגישים.</div><section class="stats"><div class="stat"><strong id="vehicleCount">0</strong><span>רכבים</span></div><div class="stat"><strong id="openCount">0</strong><span>תקלות פתוחות</span></div><div class="stat"><strong id="taskCount">0</strong><span>משימות פתוחות</span></div></section><nav class="tabs"><button data-tab="vehicles" class="active">🚍 רכבים</button><button data-tab="faults">🔧 תקלות ומוסכים</button><button data-tab="tasks">📋 משימות</button><button data-tab="backup">💾 גיבוי וייבוא</button></nav>
-<section id="vehicles" class="card"><h2>רשימת רכבים</h2><form id="vehicleForm"><div class="row"><div><label>מספר רכב *</label><input name="plate" required placeholder="40106803"></div><div><label>סוג רכב</label><select name="type"><option>מיניבוס</option><option>אוטובוס</option><option>רכב אחר</option></select></div></div><label>הערות</label><input name="note" placeholder="מידע כללי"><button>הוסף רכב</button></form><hr><input id="vehicleSearch" placeholder="חיפוש לפי מספר רכב"><div id="vehicleList"></div></section>
-<section id="faults" class="card hidden"><h2>דיווח תקלה / מוסך</h2><form id="faultForm"><div class="row"><div><label>מספר רכב *</label><input name="plate" required></div><div><label>מוסך</label><input name="garage"></div></div><label>פירוט התקלה *</label><textarea name="description" required></textarea><div class="row"><div><label>סטטוס</label><select name="status"><option>פתוחה</option><option>במוסך</option><option>ממתין לחלפים</option><option>תוקנה - ממתין לאישור קצין בטיחות</option></select></div><div><label>תאריך דיווח</label><input type="date" name="date" id="faultDate"></div></div><button>שמור דיווח</button></form><hr><div id="faultList"></div></section>
-<section id="tasks" class="card hidden"><h2>משימות יומיות</h2><form id="taskForm"><label>משימה *</label><input name="title" required><div class="row"><div><label>תאריך יעד</label><input type="date" name="due"></div><div><label>אחראי</label><input name="owner"></div></div><button>הוסף משימה</button></form><hr><div id="taskList"></div></section>
-<section id="backup" class="card hidden"><h2>גיבוי והעברת נתונים</h2><p class="muted">ייצוא גיבוי JSON למחשב או לטלפון, וייבוא אותו גיבוי בהמשך. אין סנכרון אוטומטי.</p><div class="actions"><button onclick="exportBackup()">הורד גיבוי</button><label class="secondary">ייבוא גיבוי JSON<input type="file" id="restore" accept=".json,application/json"></label></div><hr><h2>ייבוא רשימת רכבים CSV</h2><p class="muted">קובץ CSV עם עמודה בשם "מספר רכב" או plate. מומלץ לשמור ב־UTF-8. הייבוא מוסיף רכבים חדשים בלבד.</p><input type="file" id="csv" accept=".csv,text/csv"><p class="muted">אין לייבא נתוני נהגים אישיים לגרסת הניסיון.</p></section></main>
-<script>
-const KEY='maya_intelkg_v1';let db;try{db=JSON.parse(localStorage.getItem(KEY))}catch(e){};db=db||{vehicles:[],faults:[],tasks:[]};
-const $=id=>document.getElementById(id), save=()=>{localStorage.setItem(KEY,JSON.stringify(db));render()},esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('main>section.card').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab))});
-$('faultDate').value=new Date().toISOString().slice(0,10);
-$('vehicleForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));d.plate=d.plate.trim();if(db.vehicles.some(v=>v.plate===d.plate))return alert('הרכב כבר קיים');db.vehicles.push({...d,id:uid()});e.target.reset();save()};
-$('faultForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));db.faults.unshift({...d,id:uid(),approved:false});e.target.reset();$('faultDate').value=new Date().toISOString().slice(0,10);save()};
-$('taskForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));db.tasks.unshift({...d,id:uid(),done:false});e.target.reset();save()};
-$('vehicleSearch').oninput=render;
-function updateFault(id){let f=db.faults.find(x=>x.id===id);if(!f)return;let choices=['פתוחה','במוסך','ממתין לחלפים','תוקנה - ממתין לאישור קצין בטיחות'];let next=prompt('בחר סטטוס:\n1. פתוחה\n2. במוסך\n3. ממתין לחלפים\n4. תוקנה - ממתין לאישור קצין בטיחות',String(choices.indexOf(f.status)+1));if(!next)return;if(!/^[1-4]$/.test(next))return alert('בחירה לא תקינה');f.status=choices[Number(next)-1];save()}
-function toggleTask(id){let t=db.tasks.find(x=>x.id===id);if(t){t.done=!t.done;save()}}
-function render(){
-$('vehicleCount').textContent=db.vehicles.length;$('openCount').textContent=db.faults.filter(x=>!x.status.startsWith('תוקנה')).length;$('taskCount').textContent=db.tasks.filter(x=>!x.done).length;
-let q=$('vehicleSearch').value.trim();$('vehicleList').innerHTML=db.vehicles.filter(v=>v.plate.includes(q)).map(v=>`<div class="item"><b>${esc(v.plate)}</b> <span class="badge">${esc(v.type)}</span><div class="muted">${esc(v.note)}</div></div>`).join('')||'<p class="muted">אין רכבים להצגה</p>';
-$('faultList').innerHTML=db.faults.map(f=>`<div class="item"><b>🚍 ${esc(f.plate)}</b> <span class="badge">${esc(f.status)}</span><p>${esc(f.description)}</p><div class="muted">${esc(f.garage)} · ${esc(f.date)}</div><div class="actions"><button class="secondary" onclick="updateFault('${f.id}')">עדכון סטטוס</button></div></div>`).join('')||'<p class="muted">אין תקלות מדווחות</p>';
-$('taskList').innerHTML=db.tasks.map(t=>`<div class="item"><b>${esc(t.title)}</b> <span class="badge">${t.done?'בוצעה':'פתוחה'}</span><div class="muted">אחראי: ${esc(t.owner)} · יעד: ${esc(t.due)}</div><div class="actions"><button class="secondary" onclick="toggleTask('${t.id}')">${t.done?'סמן כפתוחה':'סמן כבוצעה'}</button></div></div>`).join('')||'<p class="muted">אין משימות</p>'}
-function download(name,content,type){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([content],{type}));a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),3000)}
-function exportBackup(){download('MAYA_INTEL_KG_backup_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(db,null,2),'application/json')}
-$('restore').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{let d=JSON.parse(await file.text());if(!Array.isArray(d.vehicles)||!Array.isArray(d.faults)||!Array.isArray(d.tasks))throw Error();if(confirm('הייבוא יחליף את כל הנתונים במכשיר. להמשיך?')){db=d;save();alert('הגיבוי נטען')}}catch(x){alert('קובץ גיבוי לא תקין')}e.target.value=''};
-function parseCSV(s){let rows=[],row=[],v='',quoted=false;for(let i=0;i<s.length;i++){let c=s[i];if(c==='"'){if(quoted&&s[i+1]==='"'){v+='"';i++}else quoted=!quoted}else if(c===','&&!quoted){row.push(v);v=''}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&s[i+1]==='\n')i++;row.push(v);if(row.some(x=>x.trim()))rows.push(row);row=[];v=''}else v+=c}row.push(v);if(row.some(x=>x.trim()))rows.push(row);return rows}
-$('csv').onchange=async e=>{let f=e.target.files[0];if(!f)return;let rows=parseCSV((await f.text()).replace(/^\uFEFF/,'')),head=(rows.shift()||[]).map(x=>x.trim()),col=head.findIndex(x=>['מספר רכב','plate','מספר רישוי'].includes(x));if(col<0){alert('לא נמצאה עמודה מספר רכב');return}let added=0;for(let r of rows){let plate=(r[col]||'').trim();if(!/^[0-9-]{5,12}$/.test(plate)||db.vehicles.some(x=>x.plate===plate))continue;db.vehicles.push({id:uid(),plate,type:'לא סווג',note:'יובא מ-CSV'});added++}save();alert('נוספו '+added+' רכבים');e.target.value=''};
-render();
-</script></body></html>
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>מאיה תור – ניהול רכבים במוסכים</title>
+    <meta name="description" content="מערכת מקצועית לניהול, מעקב ובקרה של רכבים במוסכים עבור מאיה תור, כולל מעקב סטטוסים, הפקת דוחות וניהול הרשאות סדרנים." />
+    <meta property="og:title" content="מאיה תור – ניהול רכבים במוסכים" />
+    <meta property="og:description" content="מערכת מקצועית לניהול, מעקב ובקרה של רכבים במוסכים עבור מאיה תור, כולל מעקב סטטוסים, הפקת דוחות וניהול הרשאות סדרנים." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="מאיה תור" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <!-- Google Fonts for Hebrew UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="./assets/index-B5CHq-jd.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BVztAsb0.css">
+  </head>
+  <body class="bg-slate-50 text-slate-900 font-['Heebo',sans-serif] antialiased min-h-screen selection:bg-blue-600 selection:text-white">
+    <div id="root"></div>
+  </body>
+</html>
+
